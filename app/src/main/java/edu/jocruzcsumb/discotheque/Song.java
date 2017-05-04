@@ -137,19 +137,9 @@ public class Song implements Comparable<Song>, Parcelable
 		return artworkUrl;
 	}
 
-	public void setArtworkUrl(String photo_link)
-	{
-		this.artworkUrl = photo_link;
-	}
-
 	public String getName()
 	{
 		return title;
-	}
-
-	public void setName(String songName)
-	{
-		this.title = songName;
 	}
 
 	public String getArtist()
@@ -170,6 +160,11 @@ public class Song implements Comparable<Song>, Parcelable
 	public int getDuration()
 	{
 		return duration;
+	}
+
+	public long getStartTime()
+	{
+		return startTime;
 	}
 
 	public int compareTo(Song other)
@@ -207,20 +202,15 @@ public class Song implements Comparable<Song>, Parcelable
 		dest.writeString(track_permalink);
 	}
 
-	public long getStartTime()
-	{
-		return startTime;
-	}
-
 	public void print(Log.Level level)
 	{
 		//print current song
 		Log.l(level, TAG,
 				"Title: " + getName() +
-				"\nArtist: " + getArtist() +
-				"\nStart time: " + getStartTime() +
-				"\nDuration: " + getDuration() +
-				"\nURL: " + (CompileOptions.LOG_SONG_URLS ?  getUrl() : ((getUrl() == null || getUrl().equals(""))? "NO" : "YES"))
+						"\nArtist: " + getArtist() +
+						"\nStart time: " + getStartTime() +
+						"\nDuration: " + getDuration() +
+						"\nURL: " + (CompileOptions.LOG_SONG_URLS ? getUrl() : ((getUrl() == null || getUrl().equals("")) ? "NO" : "YES"))
 		);
 	}
 
