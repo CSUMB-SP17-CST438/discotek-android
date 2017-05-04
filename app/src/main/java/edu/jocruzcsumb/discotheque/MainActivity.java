@@ -25,12 +25,13 @@ import com.google.android.gms.common.api.Status;
 
 import java.util.ArrayList;
 
+import static edu.jocruzcsumb.discotheque.LocalUser.GOOGLE_AUTH_TAG;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks
 {
 
 	private static final int REQ_CODE = 9001;
 	private static final String TAG = "MainActivity";
-	private static final String GOOGLE_AUTH_TAG = "Google auth";
 	ArrayList<Button> buttons = new ArrayList<>();
 
 	//setting listeners
@@ -122,7 +123,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 		{
 			LoginManager.getInstance()
 						.logOut();
-			googleSignOut();
+			LocalUser.googleSignOut(googleApiClient);
 			switch (LocalUser.getCurrentUser()
 							 .getLoginType())
 			{
@@ -163,65 +164,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 		Log.i(GOOGLE_AUTH_TAG, "googleSignIn");
 		Intent intent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
 		startActivityForResult(intent, REQ_CODE);
-	}
-
-	private void googleSignOut()
-	{
-		Log.i(GOOGLE_AUTH_TAG, "googleSignOut");
-		if (!googleApiClient.isConnected())
-		{
-			googleApiClient.connect();
-			googleApiClient.registerConnectionCallbacks(new GoogleApiClient.ConnectionCallbacks()
-			{
-				@Override
-				public void onConnected(@Nullable Bundle bundle)
-				{
-					if (googleApiClient.isConnected())
-					{
-						Auth.GoogleSignInApi.signOut(googleApiClient)
-											.setResultCallback(new ResultCallback<Status>()
-											{
-												@Override
-												public void onResult(@NonNull Status status)
-												{
-													if (status.isSuccess())
-													{
-														Log.i(GOOGLE_AUTH_TAG, "User Logged out");
-													}
-												}
-											});
-					}
-					else
-					{
-						Log.e(GOOGLE_AUTH_TAG, "signout failed, trying again");
-						googleSignOut();
-					}
-				}
-
-				@Override
-				public void onConnectionSuspended(int i)
-				{
-
-				}
-			});
-		}
-		else
-		{
-			doGoogleSignOut();
-		}
-	}
-
-	private void doGoogleSignOut()
-	{
-		Auth.GoogleSignInApi.signOut(googleApiClient)
-							.setResultCallback(new ResultCallback<Status>()
-							{
-								@Override
-								public void onResult(@NonNull Status status)
-								{
-									Log.i(GOOGLE_AUTH_TAG, "googleSignOut onResult: " + status.getStatusMessage());
-								}
-							});
 	}
 
 	private GoogleApiClient getGoogleApiClient()
@@ -290,7 +232,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 									 .show();
 							}
 						});
-						googleSignOut();
+						LocalUser.googleSignOut(googleApiClient);
 						showLoader(false);
 					}
 				}
