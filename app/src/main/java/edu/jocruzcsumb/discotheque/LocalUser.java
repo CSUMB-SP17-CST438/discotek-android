@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import com.facebook.AccessToken;
 import com.facebook.LoginStatusCallback;
@@ -15,6 +17,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -121,7 +124,8 @@ public class LocalUser extends User
 						GoogleSignInAccount gacc = r.getSignInAccount();
 						if (gacc == null)
 						{
-							Log.wtf(TAG, "SilentSignIn: Google sign in result was null.");
+
+							Log.e(TAG, "SilentSignIn: Google sign in result was null.");
 							return false;
 						}
 						Log.i(TAG, "SilentSignIn Google attempting dtk login");
@@ -218,6 +222,68 @@ public class LocalUser extends User
 		k.putExtra("signout", true);
 		context.startActivity(k);
 		context.finish();
+	}
+
+
+	public static final String GOOGLE_AUTH_TAG = "Google auth";
+
+	public static void googleSignOut(final GoogleApiClient googleApiClient)
+	{
+		Log.i(GOOGLE_AUTH_TAG, "googleSignOut");
+		if (!googleApiClient.isConnected())
+		{
+			googleApiClient.connect();
+			googleApiClient.registerConnectionCallbacks(new GoogleApiClient.ConnectionCallbacks()
+			{
+				@Override
+				public void onConnected(@Nullable Bundle bundle)
+				{
+					if (googleApiClient.isConnected())
+					{
+						Auth.GoogleSignInApi.signOut(googleApiClient)
+											.setResultCallback(new ResultCallback<Status>()
+											{
+												@Override
+												public void onResult(@NonNull Status status)
+												{
+													if (status.isSuccess())
+													{
+														Log.i(GOOGLE_AUTH_TAG, "User Logged out");
+													}
+												}
+											});
+					}
+					else
+					{
+						Log.e(GOOGLE_AUTH_TAG, "signout failed, trying again");
+						googleSignOut(googleApiClient);
+					}
+				}
+
+				@Override
+				public void onConnectionSuspended(int i)
+				{
+
+				}
+			});
+		}
+		else
+		{
+			doGoogleSignOut(googleApiClient);
+		}
+	}
+
+	private static void doGoogleSignOut(final GoogleApiClient googleApiClient)
+	{
+		Auth.GoogleSignInApi.signOut(googleApiClient)
+							.setResultCallback(new ResultCallback<Status>()
+							{
+								@Override
+								public void onResult(@NonNull Status status)
+								{
+									Log.i(GOOGLE_AUTH_TAG, "googleSignOut onResult: " + status.getStatusMessage());
+								}
+							});
 	}
 
 	public static boolean isLoggedIn()
