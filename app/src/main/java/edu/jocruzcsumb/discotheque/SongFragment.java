@@ -211,6 +211,7 @@ public class SongFragment extends FloorFragment
 			{
 				songViewHolder.image.setImageResource(R.drawable.ic_launcher);
 			}
+			songViewHolder.cv.setCardBackgroundColor(getResources().getColor(R.color.colorPrimary));
 			if(!s.chosenByServer())
 			{
 				Log.d(TAG, "found user chosen song");
