@@ -196,23 +196,26 @@ public class SongFragment extends FloorFragment
 		@Override
 		public void onBindViewHolder(SongFragment.SongAdapter.SongViewHolder songViewHolder, int i)
 		{
-			songViewHolder.songName.setText(songs.get(i)
-												 .getName());
-			songViewHolder.name.setText(songs.get(i)
-											 .getArtist());
-			if (!songs.get(i)
-					  .getArtworkUrl()
+			final Song s = songs.get(i);
+			songViewHolder.songName.setText(s.getName());
+			songViewHolder.name.setText(s.getArtist());
+			if (!s.getArtworkUrl()
 					  .equals("null"))
 			{
 				Picasso.with(mContext)
-					   .load(songs.get(i)
-								  .getArtworkUrl())
+					   .load(s.getArtworkUrl())
 					   .into(songViewHolder.image);
 
 			}
 			else
 			{
 				songViewHolder.image.setImageResource(R.drawable.ic_launcher);
+			}
+			if(!s.chosenByServer())
+			{
+				Log.d(TAG, "found user chosen song");
+				s.print(Log.Level.Debug);
+				//songViewHolder.cv.setCardBackgroundColor(R.color.);
 			}
 
 		}
