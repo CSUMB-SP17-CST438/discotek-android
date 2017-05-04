@@ -35,9 +35,7 @@ public class FacebookFragment extends Fragment
 		@Override
 		public void onCancel()
 		{
-			Toast.makeText(context, "Login Canceled", TOAST_DURATION)
-				 .show();
-			Log.d(TAG, "Login Canceled");
+			Log.i(TAG, "Login Canceled");
 			MainActivity a = (MainActivity) getActivity();
 			a.showLoader(false);
 		}
@@ -45,9 +43,7 @@ public class FacebookFragment extends Fragment
 		@Override
 		public void onError(FacebookException error)
 		{
-			Toast.makeText(context, "Login Error", TOAST_DURATION)
-				 .show();
-			Log.d(TAG, "Login Error");
+			Log.e(TAG, "Login Error");
 			MainActivity a = (MainActivity) getActivity();
 			a.showLoader(false);
 		}
@@ -55,9 +51,7 @@ public class FacebookFragment extends Fragment
 		@Override
 		public void onSuccess(LoginResult result)
 		{
-			Toast.makeText(context, "Login Success", TOAST_DURATION)
-				 .show();
-			Log.d(TAG, "Login Success");
+			Log.i(TAG, "Login Success");
 			AccessToken token = result.getAccessToken();
 
 			if (LocalUser.socketLogin(LocalUser.LoginType.FACEBOOK, token.getToken()))
@@ -119,8 +113,8 @@ public class FacebookFragment extends Fragment
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data)
 	{
+		Log.i(TAG, "onActivityResult");
 		super.onActivityResult(requestCode, resultCode, data);
-		Log.d(TAG, "onActivityResult");
 		callbackManager.onActivityResult(requestCode, resultCode, data);
 	}
 }
