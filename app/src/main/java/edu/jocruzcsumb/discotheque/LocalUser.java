@@ -124,12 +124,17 @@ public class LocalUser extends User
 						GoogleSignInAccount gacc = r.getSignInAccount();
 						if (gacc == null)
 						{
-
 							Log.e(TAG, "SilentSignIn: Google sign in result was null.");
+							googleSignOut(googleApiClient);
 							return false;
 						}
 						Log.i(TAG, "SilentSignIn Google attempting dtk login");
-						return socketLogin(LoginType.GOOGLE, gacc.getIdToken());
+						boolean b = socketLogin(LoginType.GOOGLE, gacc.getIdToken());
+						if(!b)
+						{
+							googleSignOut(googleApiClient);
+						}
+						return b;
 					}
 					else
 					{
@@ -149,6 +154,7 @@ public class LocalUser extends User
 				catch (InterruptedException e)
 				{
 					e.printStackTrace();
+					googleSignOut(googleApiClient);
 					return false;
 				}
 				GoogleSignInAccount gacc = null;
@@ -158,17 +164,24 @@ public class LocalUser extends User
 					if (gacc != null)
 					{
 						Log.i(TAG, "SilentSignIn Google attempting dtk login");
-						return socketLogin(LoginType.GOOGLE, gacc.getIdToken());
+						boolean b = socketLogin(LoginType.GOOGLE, gacc.getIdToken());
+						if(!b)
+						{
+							googleSignOut(googleApiClient);
+						}
+						return b;
 					}
 					else
 					{
 						Log.wtf(TAG, "SilentSignIn: Google account was null.");
+						googleSignOut(googleApiClient);
 						return false;
 					}
 				}
 				else
 				{
-					Log.wtf(TAG, "SilentSignIn: Google sign in result was null.");
+					Log.e(TAG, "SilentSignIn: Google sign in result was null.");
+					googleSignOut(googleApiClient);
 					return false;
 				}
 			case FACEBOOK:
@@ -189,16 +202,23 @@ public class LocalUser extends User
 				catch (InterruptedException e)
 				{
 					e.printStackTrace();
+					LoginManager.getInstance().logOut();
 					return false;
 				}
 				if (cb.facebookToken != null)
 				{
 					Log.i(TAG, "SilentSignIn Facebook attempting dtk login");
-					return socketLogin(LoginType.GOOGLE, cb.facebookToken);
+					boolean b = socketLogin(LoginType.GOOGLE, cb.facebookToken);
+					if(!b)
+					{
+						LoginManager.getInstance().logOut();
+					}
+					return b;
 				}
 				else
 				{
 					Log.wtf(TAG, "SilentSignIn: Facebook token was null.");
+					LoginManager.getInstance().logOut();
 					return false;
 				}
 			case SOUNDCLOUD:
