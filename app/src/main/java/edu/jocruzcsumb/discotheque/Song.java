@@ -15,7 +15,6 @@ import java.util.ArrayList;
 
 public class Song implements Comparable<Song>, Parcelable
 {
-
 	public static final String TAG = "Song";
 
 	public static final String CHOSEN_BY_SERVER = "@server";
