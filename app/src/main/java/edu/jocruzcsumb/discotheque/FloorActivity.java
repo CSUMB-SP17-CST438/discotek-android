@@ -91,7 +91,6 @@ public class FloorActivity extends AppCompatActivity
 						backgroundView.setImageResource(genreTypes(FloorActivity.this.floor.getGenre())); //use this to let users background image later
 					}
 				});
-
 			}
 
 			public void onSongStarted(Song x)
@@ -241,6 +240,18 @@ public class FloorActivity extends AppCompatActivity
 			findViewById(R.id.loading_panel).setVisibility(View.GONE);
 		}
 		setCurrentSong((Song) savedInstanceState.getParcelable(Song.TAG));
+		FloorActivity.this.runOnUiThread(new Runnable()
+		{
+			@Override
+			public void run()
+			{
+				findViewById(R.id.loading_panel).setVisibility(View.GONE);
+				setTitle(FloorActivity.this.floor.getName());
+
+				//setting background by according to genre
+				backgroundView.setImageResource(genreTypes(FloorActivity.this.floor.getGenre())); //use this to let users background image later
+			}
+		});
 	}
 
 	@Override
