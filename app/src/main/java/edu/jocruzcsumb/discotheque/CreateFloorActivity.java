@@ -93,7 +93,7 @@ public class CreateFloorActivity extends AppCompatActivity implements View.OnCli
 //				Log.d(TAG, selectedText);
 				if (floorname.isEmpty())
 				{
-					Toast.makeText(CreateFloorActivity.this, "Please enter a floor name", Toast.LENGTH_SHORT)
+					Toast.makeText(CreateFloorActivity.this, R.string.error_no_floor_name, Toast.LENGTH_SHORT)
 						 .show();
 				}
 				else
@@ -123,7 +123,7 @@ public class CreateFloorActivity extends AppCompatActivity implements View.OnCli
 
 	private void updateUI(final int i)
 	{
-		final String[] strings = new String[]{"Error! Floor name already exists.", "Floor was created successfully"};
+		final String[] strings = new String[]{getString(R.string.error_floor_already_exists), getString(R.string.create_floor_success)};
 		runOnUiThread(new Runnable()
 		{
 			@Override
@@ -147,12 +147,9 @@ public class CreateFloorActivity extends AppCompatActivity implements View.OnCli
 			{
 				showLoader(false);
 				updateUI(0);
-
-
 			}
 			else
 			{
-				showLoader(false);
 				updateUI(1);
 				try
 				{
@@ -163,7 +160,6 @@ public class CreateFloorActivity extends AppCompatActivity implements View.OnCli
 					k.putExtra(Floor.TAG, floorId);
 					k.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 					startActivity(k);
-					//showLoader(false);
 					finish();
 
 					//getDialog().dismiss();
