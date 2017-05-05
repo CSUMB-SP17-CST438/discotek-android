@@ -55,7 +55,7 @@ public class ChatFragment extends FloorFragment implements View.OnClickListener
 		recyclerView = (RecyclerView) rootView.findViewById(R.id.rv2);
 		recyclerView.setHasFixedSize(true);
 		llm = new LinearLayoutManager(this.getActivity());
-		//llm.setStackFromEnd(true); //scrolls to the bottom
+		llm.setStackFromEnd(true); //scrolls to the bottom
 		recyclerView.setLayoutManager(llm);
 
 		if (findFloor())
@@ -96,10 +96,6 @@ public class ChatFragment extends FloorFragment implements View.OnClickListener
 
 			}
 		});
-
-		if(llm.findFirstCompletelyVisibleItemPosition()== messages.size()-1){
-			llm.setStackFromEnd(true); //scrolls to the bottom
-		}
 
 	}
 
