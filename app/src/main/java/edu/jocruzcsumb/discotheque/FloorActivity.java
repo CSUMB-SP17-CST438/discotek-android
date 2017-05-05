@@ -182,11 +182,11 @@ public class FloorActivity extends AppCompatActivity
 		switch (genre)
 		{
 			case "reggae":
-				return R.drawable.red_cardcover_temp;
-			case "soft rock":
-				return R.drawable.teal_cardcover_temp;
+				return R.drawable.discoTek_wallpaper_reggae_02;
+			case "rock":
+				return R.drawable.discoTek_wallpaper_rock_03;
 			default:
-				return R.drawable.yellow_cardcover_temp;
+				return R.drawable.discoTek_wallpaper_electric_01;
 
 		}
 	}
