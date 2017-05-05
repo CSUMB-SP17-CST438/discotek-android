@@ -12,12 +12,16 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+
 
 public class ViewProfileActivity extends AppCompatActivity implements View.OnClickListener
 {
 	public static final String TAG = "ViewProfileActivity";
 	private TextView editBio;
+	private TextView editGenres;
 	private ImageView image;
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -27,7 +31,7 @@ public class ViewProfileActivity extends AppCompatActivity implements View.OnCli
 		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 		setSupportActionBar(toolbar);
 		editBio = (TextView) findViewById(R.id.bio);
-
+		editGenres = (TextView) findViewById(R.id.genres);
 		FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 		image = (ImageView) findViewById(R.id.profile_picture);
 		fab.setOnClickListener(this);
@@ -46,10 +50,12 @@ public class ViewProfileActivity extends AppCompatActivity implements View.OnCli
 				   .load(user.getPhoto())
 				   .transform(new CircleTransform())
 				   .into(image);
-			if (user.getBio() != null)
-			{
-				editBio.setText(user.getBio());
-				Log.d(TAG, editBio.toString());
+			editBio.setText(user.getBio());
+			ArrayList<String> userGenres = user.getGenres();
+			if(userGenres != null) {
+				for (int i = 0; i < userGenres.size(); i++) {
+					editGenres.append(userGenres.get(i) + "\n");
+				}
 			}
 		}
 	}
