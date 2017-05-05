@@ -21,7 +21,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/bio"
+            android:id="@+id/username"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
@@ -29,23 +29,23 @@
             android:layout_marginTop="3dp"
             android:clickable="true"
             android:padding="20dp"
-            android:text="Bio"/>
+            android:text="username"/>
 
         <TextView
-            android:id="@+id/genres"
+            android:id="@+id/bio"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:clickable="true"
             android:padding="20dp"
-            android:text="genres"/>
+            android:text="bio"/>
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="@dimen/fab_margin"
-            app:layout_anchor="@id/genres"
+            app:layout_anchor="@id/bio"
             app:layout_anchorGravity="bottom|right|end"
             android:src="@drawable/ic_mode_edit_black_24dp"
             />

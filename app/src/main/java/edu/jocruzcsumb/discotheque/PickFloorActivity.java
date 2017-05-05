@@ -25,6 +25,8 @@ import java.util.ArrayList;
 
 import io.socket.emitter.Emitter;
 
+import static edu.jocruzcsumb.discotheque.UpdateProfileActivity.USER_TAG;
+
 
 public class PickFloorActivity extends AppCompatActivity implements View.OnClickListener
 {
@@ -179,6 +181,11 @@ public class PickFloorActivity extends AppCompatActivity implements View.OnClick
 		// Handle item selection
 		switch (item.getItemId())
 		{
+			case R.id.profile:
+				Intent intent = new Intent(PickFloorActivity.this, ViewProfileActivity.class);
+				intent.putExtra(USER_TAG, LocalUser.getCurrentUser());
+				startActivity(intent);
+				return true;
 			case R.id.signout:
 				LocalUser.logout(PickFloorActivity.this);
 				return true;

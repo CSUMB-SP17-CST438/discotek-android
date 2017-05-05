@@ -19,6 +19,7 @@ public class User implements Parcelable
 	public static final String JSON_FNAME_TAG = "member_FName";
 	public static final String JSON_LNAME_TAG = "member_LName";
 	public static final String JSON_IMG_URL_TAG = "member_img_url";
+	private static final String JSON_BIO_TAG = "member_bio";
 
 	public static final Parcelable.Creator<User> CREATOR = new Parcelable.Creator<User>()
 	{
@@ -58,16 +59,6 @@ public class User implements Parcelable
 		this.lastName = lastName;
 	}
 
-	public User(String userName, String firstName, String lastName, String photo)
-	{
-		this();
-		this.userName = userName;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.photo = photo;
-
-	}
-
 	public User(String userName, String firstName, String lastName, String photo, String bio)
 	{
 		this();
@@ -96,7 +87,9 @@ public class User implements Parcelable
 				jsonUser.getString(JSON_USERNAME_TAG),
 				jsonUser.getString(JSON_FNAME_TAG),
 				jsonUser.getString(JSON_LNAME_TAG),
-				jsonUser.getString(JSON_IMG_URL_TAG)
+				jsonUser.getString(JSON_IMG_URL_TAG),
+				jsonUser.getString(JSON_BIO_TAG)
+
 		);
 	}
 
@@ -110,17 +103,6 @@ public class User implements Parcelable
 			userList.add(User.parse(a.getJSONObject(i)));
 		}
 		return userList;
-	}
-
-	protected static User parseProfile(JSONObject jsonUser) throws JSONException
-	{
-		//TODO: PARSE EVEN MORE USER INFO
-		return new User(
-				jsonUser.getString(JSON_USERNAME_TAG),
-				jsonUser.getString(JSON_FNAME_TAG),
-				jsonUser.getString(JSON_LNAME_TAG),
-				jsonUser.getString(JSON_IMG_URL_TAG)
-		);
 	}
 
 	public static boolean isValidUsername(String username)

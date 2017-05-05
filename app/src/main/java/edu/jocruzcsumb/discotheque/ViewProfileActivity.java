@@ -12,11 +12,19 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+
+import static edu.jocruzcsumb.discotheque.UpdateProfileActivity.USER_TAG;
+
 
 public class ViewProfileActivity extends AppCompatActivity implements View.OnClickListener
 {
+	public static final String TAG = "ViewProfileActivity";
+	private TextView editUsername;
 	private TextView editBio;
 	private ImageView image;
+	private User user;
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -25,31 +33,29 @@ public class ViewProfileActivity extends AppCompatActivity implements View.OnCli
 		setContentView(R.layout.activity_view_profile);
 		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 		setSupportActionBar(toolbar);
+		editUsername = (TextView) findViewById(R.id.username);
 		editBio = (TextView) findViewById(R.id.bio);
-
 		FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 		image = (ImageView) findViewById(R.id.profile_picture);
 		fab.setOnClickListener(this);
 		//pass object from previous activity
 		Intent in = getIntent();
-		User user = (User) in.getParcelableExtra("user");
+		user = (User) in.getParcelableExtra("user");
 		if (user != null)
 		{
 			//if not current user, info is not edible
 			//TODO:hide button if not local user
-//			if(){
-//				fab.setVisibility(View.GONE);
-//			}
+			if(!user.getUserName().equals(LocalUser.getCurrentUser().getUserName())){
+				fab.setVisibility(View.GONE);
+			}
 			getSupportActionBar().setTitle(user.getFirstName() + " " + user.getLastName());
-			//Picasso.with(this).load(user.getPhoto()).into(image);
 			Picasso.with(this)
 				   .load(user.getPhoto())
 				   .transform(new CircleTransform())
 				   .into(image);
-			if (user.getBio() != null)
-			{
-				editBio.setText(user.getBio());
-			}
+			editUsername.setText(user.getUserName());
+			editBio.setText(user.getBio());
+
 		}
 	}
 
@@ -83,7 +89,10 @@ public class ViewProfileActivity extends AppCompatActivity implements View.OnCli
 
 //				Sockets.getSocket().emit("update user", jsonObject);
 				Intent intent = new Intent(ViewProfileActivity.this, UpdateProfileActivity.class);
+				intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				intent.putExtra(USER_TAG, user);
 				startActivity(intent);
+				finish();
 				Snackbar.make(view, "Profile info saved", Snackbar.LENGTH_LONG)
 						.setAction("Action", null)
 						.show();
