@@ -23,6 +23,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 import static edu.jocruzcsumb.discotheque.FloorService.EVENT_FLOOR_JOINED;
+import static edu.jocruzcsumb.discotheque.FloorService.EVENT_PICK_SONG;
 import static edu.jocruzcsumb.discotheque.FloorService.EVENT_SONG_LIST_UPDATE;
 
 
@@ -82,7 +83,7 @@ public class SongFragment extends FloorFragment
 				Log.i(TAG, "onItemClick");
 				Song song = songs.get(position);
 				song.print(Log.Level.Verbose);
-				//TODO: Broadcast song picked.
+				broadcast(EVENT_PICK_SONG);
 			}
 
 			@Override
@@ -212,12 +213,15 @@ public class SongFragment extends FloorFragment
 			{
 				songViewHolder.image.setImageResource(R.drawable.ic_launcher);
 			}
-			songViewHolder.cv.setCardBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
-			if(!s.chosenByServer())
+			if(true)
 			{
 				Log.d(TAG, "found user chosen song");
 				s.print(Log.Level.Debug);
-				//songViewHolder.cv.setCardBackgroundColor(R.color.);
+				songViewHolder.chosenBy.setText(String.format("%s %s", getString(R.string.chosen_by), s.getChosenBy()));
+			}
+			else
+			{
+				songViewHolder.chosenBy.setText("");
 			}
 
 		}
@@ -232,6 +236,7 @@ public class SongFragment extends FloorFragment
 		{
 			CardView cv;
 			TextView songName;
+			TextView chosenBy;
 			TextView name;
 			ImageView image;
 
@@ -241,6 +246,7 @@ public class SongFragment extends FloorFragment
 				cv = (CardView) itemView.findViewById(R.id.cv);
 				songName = (TextView) itemView.findViewById(R.id.song);
 				name = (TextView) itemView.findViewById(R.id.artist);
+				chosenBy = (TextView) itemView.findViewById(R.id.chosen_by);
 				image = (ImageView) itemView.findViewById(R.id.photo);
 			}
 

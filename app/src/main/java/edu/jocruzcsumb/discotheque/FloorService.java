@@ -74,6 +74,9 @@ public class FloorService extends IntentService
 	// The action that is sent to start the FloorService
 	private static final String ACTION_JOIN_FLOOR = "edu.jocruzcsumb.discotheque.action.JOINFLOOR";
 
+	// When the user requests to pick a song
+	public static final String EVENT_PICK_SONG = "pick song";
+
 	// Probably will not use this.
 	private static final String EXTRA_FLOOR = "edu.jocruzcsumb.discotheque.extra.FLOOR";
 

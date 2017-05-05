@@ -17,7 +17,7 @@ public class Song implements Comparable<Song>, Parcelable
 {
 	public static final String TAG = "Song";
 
-	public static final String CHOSEN_BY_SERVER = "@server";
+	public static final String CHOSEN_BY_SERVER = null;
 
 	public static final String JSON_TITLE_TAG = "title";
 	public static final String JSON_ARTIST_TAG = "creator_user";
@@ -99,7 +99,8 @@ public class Song implements Comparable<Song>, Parcelable
 		catch (Exception e)
 		{
 		}
-		String c = (jsonSong.has(JSON_CHOSEN_BY_TAG) ? jsonSong.getString(JSON_CHOSEN_BY_TAG) : CHOSEN_BY_SERVER);
+		String c = (jsonSong.has(JSON_CHOSEN_BY_TAG) ? jsonSong.getString(JSON_CHOSEN_BY_TAG) : null);
+		Log.d(TAG, c);
 		return new Song(
 				jsonSong.getString(JSON_TITLE_TAG),
 				jsonSong.getString(JSON_ARTIST_TAG),
@@ -135,7 +136,7 @@ public class Song implements Comparable<Song>, Parcelable
 
 	public boolean chosenByServer()
 	{
-		return chosenBy.equals(CHOSEN_BY_SERVER);
+		return chosenBy == null;
 	}
 
 	public String getArtworkUrl()
