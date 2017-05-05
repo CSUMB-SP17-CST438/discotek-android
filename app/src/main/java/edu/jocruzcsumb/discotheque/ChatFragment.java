@@ -18,7 +18,9 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import static edu.jocruzcsumb.discotheque.FloorService.EVENT_FLOOR_JOINED;
 import static edu.jocruzcsumb.discotheque.FloorService.EVENT_MESSAGE_ADD;
@@ -156,6 +158,13 @@ public class ChatFragment extends FloorFragment implements View.OnClickListener
 		@Override
 		public void onBindViewHolder(ChatFragment.ChatAdapter.ChatViewHolder chatViewHolder, int i)
 		{
+			Date date = new Date(messages.get(i).getPubTime()); // 'epoch' in long
+
+			SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
+			String dateString = formatter.format(date);
+
+			formatter = new SimpleDateFormat("hh:mm a"); //The "a" is the AM/PM marker
+			String time = formatter.format(date);
 			chatViewHolder.name.setText(messages.get(i)
 												.getAuthor()
 												.getFirstName() + " " + messages.get(i)
@@ -163,7 +172,7 @@ public class ChatFragment extends FloorFragment implements View.OnClickListener
 																				.getLastName());
 			chatViewHolder.message.setText(messages.get(i)
 												   .getText());
-			// chatViewHolder.time.setText(userChatList.get(i).getPub_time());
+			chatViewHolder.time.setText(dateString + "\n " +  time);
 			//if (!userChatList.get(i).getPhoto().equals("null"))
 			// {
 			Picasso.with(mContext) //TODO check resize

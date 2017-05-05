@@ -126,6 +126,10 @@
     <!--Strings for update profile activity -->
     <string name="save">Save</string>
 	<string name="view_profile">View Profile</string>
+
+	<string name="error_no_floor_name">Please enter a floor name</string>
+	<string name="error_floor_already_exists">Error! Floor name already exists.</string>
+	<string name="create_floor_success">Floor was created successfully</string>
 	<string-array name="profileGenre">
         <item>Alternative</item>
         <item>Ambient</item>
