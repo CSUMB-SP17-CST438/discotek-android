@@ -32,6 +32,7 @@ import static edu.jocruzcsumb.discotheque.FloorService.EVENT_GET_CURRENT_SONG;
 import static edu.jocruzcsumb.discotheque.FloorService.EVENT_LEAVE_FLOOR;
 import static edu.jocruzcsumb.discotheque.SeamlessMediaPlayer.EVENT_SONG_STARTED;
 import static edu.jocruzcsumb.discotheque.SeamlessMediaPlayer.EVENT_SONG_STOPPED;
+import static edu.jocruzcsumb.discotheque.UpdateProfileActivity.USER_TAG;
 
 public class FloorActivity extends AppCompatActivity
 {
@@ -323,6 +324,11 @@ public class FloorActivity extends AppCompatActivity
 
 		switch (id)
 		{
+			case R.id.profile:
+				Intent intent = new Intent(FloorActivity.this, ViewProfileActivity.class);
+				intent.putExtra(USER_TAG, LocalUser.getCurrentUser());
+				startActivity(intent);
+				return true;
 			case R.id.action_settings:
 				break;
 			case R.id.action_leave_floor:

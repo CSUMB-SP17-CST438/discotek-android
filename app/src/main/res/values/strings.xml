@@ -125,7 +125,8 @@
 
     <!--Strings for update profile activity -->
     <string name="save">Save</string>
-    <string-array name="profileGenre">
+	<string name="view_profile">View Profile</string>
+	<string-array name="profileGenre">
         <item>Alternative</item>
         <item>Ambient</item>
         <item>Classical</item>

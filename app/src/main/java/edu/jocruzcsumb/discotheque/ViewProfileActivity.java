@@ -14,13 +14,16 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
+import static edu.jocruzcsumb.discotheque.UpdateProfileActivity.USER_TAG;
+
 
 public class ViewProfileActivity extends AppCompatActivity implements View.OnClickListener
 {
 	public static final String TAG = "ViewProfileActivity";
+	private TextView editUsername;
 	private TextView editBio;
-	private TextView editGenres;
 	private ImageView image;
+	private User user;
 
 
 	@Override
@@ -30,14 +33,14 @@ public class ViewProfileActivity extends AppCompatActivity implements View.OnCli
 		setContentView(R.layout.activity_view_profile);
 		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 		setSupportActionBar(toolbar);
+		editUsername = (TextView) findViewById(R.id.username);
 		editBio = (TextView) findViewById(R.id.bio);
-		editGenres = (TextView) findViewById(R.id.genres);
 		FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 		image = (ImageView) findViewById(R.id.profile_picture);
 		fab.setOnClickListener(this);
 		//pass object from previous activity
 		Intent in = getIntent();
-		User user = (User) in.getParcelableExtra("user");
+		user = (User) in.getParcelableExtra("user");
 		if (user != null)
 		{
 			//if not current user, info is not edible
@@ -50,13 +53,9 @@ public class ViewProfileActivity extends AppCompatActivity implements View.OnCli
 				   .load(user.getPhoto())
 				   .transform(new CircleTransform())
 				   .into(image);
+			editUsername.setText(user.getUserName());
 			editBio.setText(user.getBio());
-			ArrayList<String> userGenres = user.getGenres();
-			if(userGenres != null) {
-				for (int i = 0; i < userGenres.size(); i++) {
-					editGenres.append(userGenres.get(i) + "\n");
-				}
-			}
+
 		}
 	}
 
@@ -90,7 +89,10 @@ public class ViewProfileActivity extends AppCompatActivity implements View.OnCli
 
 //				Sockets.getSocket().emit("update user", jsonObject);
 				Intent intent = new Intent(ViewProfileActivity.this, UpdateProfileActivity.class);
+				intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				intent.putExtra(USER_TAG, user);
 				startActivity(intent);
+				finish();
 				Snackbar.make(view, "Profile info saved", Snackbar.LENGTH_LONG)
 						.setAction("Action", null)
 						.show();
