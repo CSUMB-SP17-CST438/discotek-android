@@ -15,6 +15,7 @@ import com.squareup.picasso.Picasso;
 
 public class ViewProfileActivity extends AppCompatActivity implements View.OnClickListener
 {
+	public static final String TAG = "ViewProfileActivity";
 	private TextView editBio;
 	private ImageView image;
 
@@ -37,11 +38,10 @@ public class ViewProfileActivity extends AppCompatActivity implements View.OnCli
 		{
 			//if not current user, info is not edible
 			//TODO:hide button if not local user
-//			if(){
-//				fab.setVisibility(View.GONE);
-//			}
+			if(!user.getUserName().equals(LocalUser.getCurrentUser().getUserName())){
+				fab.setVisibility(View.GONE);
+			}
 			getSupportActionBar().setTitle(user.getFirstName() + " " + user.getLastName());
-			//Picasso.with(this).load(user.getPhoto()).into(image);
 			Picasso.with(this)
 				   .load(user.getPhoto())
 				   .transform(new CircleTransform())
@@ -49,6 +49,7 @@ public class ViewProfileActivity extends AppCompatActivity implements View.OnCli
 			if (user.getBio() != null)
 			{
 				editBio.setText(user.getBio());
+				Log.d(TAG, editBio.toString());
 			}
 		}
 	}
