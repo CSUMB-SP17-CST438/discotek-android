@@ -74,9 +74,9 @@ public abstract class FloorListener extends BroadcastReceiver
 		{
 			Floor floor = intent.getParcelableExtra(EVENT_FLOOR_JOINED);
 			onFloorJoined(floor);
-			onSongListUpdate(floor.getSongs());
-			onMessageListUpdate(floor.getMessages());
-			onUserListUpdate(floor.getUsers());
+			if(floor.getSongs() != null) onSongListUpdate(floor.getSongs());
+			if(floor.getMessages() != null) onMessageListUpdate(floor.getMessages());
+			if(floor.getUsers() != null) onUserListUpdate(floor.getUsers());
 		}
 		else
 		{

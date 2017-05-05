@@ -264,9 +264,9 @@ public class FloorService extends IntentService
 
 		Log.i(TAG, EVENT_FLOOR_JOINED);
 		l.broadcast(EVENT_FLOOR_JOINED, floor);
-		l.broadcast(EVENT_MESSAGE_LIST_UPDATE, floor.getMessages());
-		l.broadcast(EVENT_USER_LIST_UPDATE, floor.getUsers());
-		l.broadcast(EVENT_SONG_LIST_UPDATE, floor.getSongs());
+		if(floor.getMessages() != null) l.broadcast(EVENT_MESSAGE_LIST_UPDATE, floor.getMessages());
+		if(floor.getUsers() != null) l.broadcast(EVENT_USER_LIST_UPDATE, floor.getUsers());
+		if(floor.getSongs() != null) l.broadcast(EVENT_SONG_LIST_UPDATE, floor.getSongs());
 
 		registerSocketEvents();
 		try

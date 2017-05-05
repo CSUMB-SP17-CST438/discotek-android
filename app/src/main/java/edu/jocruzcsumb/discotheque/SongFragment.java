@@ -161,6 +161,10 @@ public class SongFragment extends FloorFragment
 
 		public int getItemCount()
 		{
+			if(songs == null)
+			{
+				return 0;
+			}
 			return songs.size();
 		}
 

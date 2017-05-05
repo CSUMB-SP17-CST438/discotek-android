@@ -60,6 +60,11 @@ public class SeamlessMediaPlayer implements MediaPlayer.OnCompletionListener, Me
 	private void checkSongs()
 	{
 		Log.i(TAG, "checkSongs");
+		if(songs == null)
+		{
+			Log.w(TAG, "checkSongs: there isn't any songs yet :(");
+			return;
+		}
 		if (lock)
 		{
 			Log.w(TAG, "checkSongs: lock was enabled");

@@ -92,6 +92,29 @@ public class FloorActivity extends AppCompatActivity
 						backgroundView.setImageResource(genreTypes(FloorActivity.this.floor.getGenre())); //use this to let users background image later
 					}
 				});
+				if(floor.getSongs() == null)
+				{
+					FloorActivity.this.runOnUiThread(new Runnable()
+					{
+						@Override
+						public void run()
+						{
+							AlertDialog.Builder builder = new AlertDialog.Builder(FloorActivity.this);
+							builder.setMessage(R.string.error_floor_dun_broke)
+								   .setCancelable(false)
+								   .setPositiveButton(R.string.action_ok, new DialogInterface.OnClickListener()
+								   {
+									   public void onClick(DialogInterface dialog, int id)
+									   {
+										   broadcast(EVENT_LEAVE_FLOOR);
+										   FloorActivity.this.finish();
+									   }
+								   });
+							AlertDialog alert = builder.create();
+							alert.show();
+						}
+					});
+				}
 			}
 
 			public void onSongStarted(Song x)
@@ -174,7 +197,7 @@ public class FloorActivity extends AppCompatActivity
 	protected void onPause()
 	{
 		super.onPause();
-		songTimer.cancel();
+		if(songTimer != null) songTimer.cancel();
 	}
 
 	private int genreTypes(String genre)

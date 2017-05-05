@@ -115,7 +115,15 @@ public class Floor implements Parcelable
 		}
 		Floor f = parse(jsonFloor);
 		f.setUsers(User.parse(jsonFloor.getJSONArray(JSON_USERS_TAG)));
-		f.setSongs(Song.parse(jsonFloor.getJSONArray(JSON_SONGS_TAG)));
+		try
+		{
+			f.setSongs(Song.parse(jsonFloor.getJSONArray(JSON_SONGS_TAG)));
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			Log.e(TAG, e.getLocalizedMessage());
+		}
 		f.setMessages(Message.parse(jsonFloor.getJSONArray(JSON_MESSAGES_TAG)));
 		//f.setTheme(Theme.parse(jsonFloor.getJSONObject(JSON_THEME_TAG)));
 		return f;
