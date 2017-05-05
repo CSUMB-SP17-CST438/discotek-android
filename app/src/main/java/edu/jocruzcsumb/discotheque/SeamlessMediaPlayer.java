@@ -116,13 +116,13 @@ public class SeamlessMediaPlayer implements MediaPlayer.OnCompletionListener, Me
 				{
 					localtime = System.currentTimeMillis() / 1000;
 					Thread.sleep(s[current].getStartTime() - localtime);
+					return;
 				}
 				catch (InterruptedException e)
 				{
 					e.printStackTrace();
 					Log.wtf(TAG, "Thread.sleep InterruptedException");
 					lock = false;
-					return;
 				}
 				//We waited, now start the song
 			}
