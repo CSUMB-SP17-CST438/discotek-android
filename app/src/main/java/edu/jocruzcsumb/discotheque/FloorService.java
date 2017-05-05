@@ -579,4 +579,11 @@ public class FloorService extends IntentService
 		LocalBroadcastManager.getInstance(getApplicationContext())
 							 .sendBroadcast(k);
 	}
+
+	@Override
+	public void onTaskRemoved(Intent rootIntent)
+	{
+		floorLatch.countDown();
+		super.onTaskRemoved(rootIntent);
+	}
 }
